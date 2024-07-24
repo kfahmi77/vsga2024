@@ -4,33 +4,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/masukan_nama_anda"
-        android:labelFor="@id/editText"
-        />
-
-    <EditText
-        android:id="@+id/editText"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="text" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/tampilkan"
-        android:onClick="showName"
-        />
-
+        android:layout_height="match_parent" />
 </LinearLayout>
