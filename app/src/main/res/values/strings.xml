@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">vsga_2024</string>
+    <string name="nama_mahasiswa">Nama Mahasiswa</string>
+    <string name="nim_mahasiswa">NIM Mahasiswa</string>
+    <string name="baca_data">Baca Data</string>
+    <string name="simpan_data">Simpan Data</string>
 </resources>
