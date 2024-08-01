@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">vsga_2024</string>
+    <string name="tambah">Tambah</string>
+    <string name="input_nama">Input Nama</string>
+    <string name="input_alamat">Input Alamat</string>
+    <string name="submit">SUBMIT</string>
+    <string name="cancel">CANCEL</string>
 </resources>
