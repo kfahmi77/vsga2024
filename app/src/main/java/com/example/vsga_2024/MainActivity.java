@@ -90,6 +90,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-    }
+    public void onAccuracyChanged(Sensor sensor, int i){}
+
 }
