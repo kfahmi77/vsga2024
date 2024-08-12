@@ -4,6 +4,6 @@
     <string name="judul">Judul</string>
     <string name="deskripsi">Deskripsi</string>
     <string name="kondisi">Kondisi</string>
-    <string name="Tambah">Add Task</string>
+    <string name="Tambah">Tambah Jurnal</string>
     <string name="light_sensor_icon">Light Sensor Icon</string>
 </resources>

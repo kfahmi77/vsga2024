@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private void showUpdateDialog(Task task) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Perbaharui Tugas");
+        builder.setTitle("Perbaharui Jurnal");
 
         View view = getLayoutInflater().inflate(R.layout.dialog_task, null);
         EditText editTitle = view.findViewById(R.id.editTitle);
