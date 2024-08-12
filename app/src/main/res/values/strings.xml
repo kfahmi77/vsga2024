@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">vsga_2024</string>
+    <string name="app_name">Jurnal Sensor</string>
+    <string name="cahaya_terang">Cahaya: Terang</string>
+    <string name="judul">Judul</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="kondisi">Kondisi</string>
+    <string name="Tambah">Add Task</string>
+    <string name="light_sensor_icon">Light Sensor Icon</string>
 </resources>
