@@ -11,7 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,12 +71,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void addTask() {
-        String title = editTitle.getText().toString();
-        String description = editDescription.getText().toString();
-        String status = editStatus.getText().toString();
-        taskDAO.insertTask(title, description, status);
-        updateTaskList();
-        clearInputs();
+        String title = editTitle.getText().toString().trim();
+        String description = editDescription.getText().toString().trim();
+        String status = editStatus.getText().toString().trim();
+
+        if (isInputValid(title, description, status)) {
+            taskDAO.insertTask(title, description, status);
+            updateTaskList();
+            clearInputs();
+            showToast("Task berhasil ditambahkan");
+        }
     }
 
     private void updateTaskList() {
@@ -141,12 +148,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         editStatus.setText(status);
     }
 
+    private boolean isInputValid(String title, String description, String status) {
+        if (title.trim().isEmpty()) {
+            showToast("Judul tidak boleh kosong");
+            return false;
+        }
+        if (description.trim().isEmpty()) {
+            showToast("Deskripsi tidak boleh kosong");
+            return false;
+        }
+        if (status.trim().isEmpty()) {
+            showToast("Status tidak boleh kosong");
+            return false;
+        }
+        return true;
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
     private void showUpdateDialog(Task task) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Update Task");
+        builder.setTitle("Perbaharui Tugas");
 
         View view = getLayoutInflater().inflate(R.layout.dialog_task, null);
         EditText editTitle = view.findViewById(R.id.editTitle);
@@ -158,28 +185,55 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         editStatus.setText(task.getStatus());
 
         builder.setView(view);
-        builder.setPositiveButton("Update", (dialog, which) -> {
-            String title = editTitle.getText().toString();
-            String description = editDescription.getText().toString();
-            String status = editStatus.getText().toString();
-            taskDAO.updateTask(task.getId(), title, description, status);
-            updateTaskList();
+        builder.setPositiveButton("Update", null); // Set to null here
+        AlertDialog dialog = builder.create();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(v -> {
+                String title = editTitle.getText().toString().trim();
+                String description = editDescription.getText().toString().trim();
+                String status = editStatus.getText().toString().trim();
+
+                if (isInputValid(title, description, status)) {
+                    taskDAO.updateTask(task.getId(), title, description, status);
+                    updateTaskList();
+                    showToast("Task berhasil diupdate");
+                    dialog.dismiss();
+                }
+            });
         });
+
         builder.setNegativeButton("Cancel", null);
-        builder.show();
+        dialog.show();
     }
 
     private void showDeleteConfirmationDialog(Task task) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete Task");
-        builder.setMessage("Are you sure you want to delete this task?");
+        View customView = getLayoutInflater().inflate(R.layout.dialog_delete_task, null);
+        builder.setView(customView);
 
-        builder.setPositiveButton("Yes", (dialog, which) -> {
+        TextView title = customView.findViewById(R.id.dialogTitle);
+        TextView message = customView.findViewById(R.id.dialogMessage);
+        ImageView icon = customView.findViewById(R.id.dialogIcon);
+        Button positiveButton = customView.findViewById(R.id.positiveButton);
+        Button negativeButton = customView.findViewById(R.id.negativeButton);
+
+        title.setText("Hapus Jurnal");
+        message.setText("Anda yakin ingin menghapus item ini?");
+        icon.setImageResource(R.drawable.baseline_delete_24); // Sesuaikan dengan ikon Anda
+
+        AlertDialog dialog = builder.create();
+
+        positiveButton.setOnClickListener(v -> {
             taskDAO.deleteTask(task.getId());
             updateTaskList();
+            dialog.dismiss();
         });
-        builder.setNegativeButton("No", null);
-        builder.show();
+
+        negativeButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
 
